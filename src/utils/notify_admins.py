@@ -1,18 +1,19 @@
 import logging
 
-from aiogram import Dispatcher, types
+from aiogram import Dispatcher
+from aiogram.utils.exceptions import ChatNotFound
 
-from src.data.config import ADMINS
+from data.config import ADMINS_ID
 
 
 async def on_startup_notify(dp: Dispatcher):
-    # chat_id = dp.bot.get_chat()
-
-    # здесь нужно получить как то chat_id
-    for admin in ADMINS:
+    logging.info("Оповещение администрации...")
+    for admin in ADMINS_ID:
         try:
-            await dp.bot.send_message(admin, text="Бот Запущен++")
-
-        except Exception as err:
-            logging.exception(err)
-
+            await dp.bot.send_message(
+                admin, f"<b>Это сообщение только для администраторов</b>\n"
+                       "Бот был успешно запущен!",
+                disable_notification=True
+            )
+        except ChatNotFound:
+            logging.debug("Чат с админом не найден")

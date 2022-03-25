@@ -4,10 +4,6 @@ import os
 from dotenv import load_dotenv
 from aiogram import Bot, Dispatcher, executor, types
 
-import re
-
-
-
 # Using dotenv for load environ-variables
 load_dotenv()
 
@@ -28,11 +24,6 @@ async def send_welcome(message: types.Message):
     code = "`from aiogram import Bot`"
     print(message)
     await message.reply(code, parse_mode="Markdown")
-
-
-@dp.message_handler(text='l')
-async def send_welcome(message: types.Message):
-    await message.reply(text="L", parse_mode="Markdown")
 
 
 if __name__ == '__main__':
