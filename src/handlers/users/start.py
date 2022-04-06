@@ -45,7 +45,6 @@ async def answer_admin_perm(call: CallbackQuery):
                                 first_name=temp_message.from_user.full_name,
                                 username=temp_message.from_user.username
                                 )
-        await commands.update_user_permissions(temp_message.from_user.id)
         await dp.bot.send_message(chat_id=call.from_user.id,
                                   text=f"Пользователь <b>{temp_message.from_user.username}</b>\n"
                                        f"(`id = {temp_message.from_user.id}`)\n"
