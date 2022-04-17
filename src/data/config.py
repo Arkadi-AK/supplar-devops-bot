@@ -1,4 +1,3 @@
-import asyncio
 import os
 
 from dotenv import load_dotenv
@@ -19,9 +18,6 @@ POSTGRES_URI = f"postgresql://{PG_USER}:{PG_PASSWORD}@{ip}/{DATABASE}"
 
 # TODO Пока есть проблема. При добавлении юзера в список админов в БД, бот в дальнейшем
 #  не видет его в числе админов, пока не будет перезапущет бот и не выполниться запрос в БД
-
-# Получение списка администраторов из .env
-# ADMINS_ID = os.environ.get('ADMINS_ID').split(',')
 
 # Получение списка админов из БД
 ADMINS_ID = select_admins()

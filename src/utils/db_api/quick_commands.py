@@ -1,15 +1,17 @@
 from asyncpg import UniqueViolationError
 
-from data.config import ADMINS_ID
 from utils.db_api.db_gino import db
 from utils.db_api.schemas.user import User
 
 
 async def add_user(telegram_id: int, first_name: str = None, username: str = None, email: str = None):
     try:
-        user = User(telegram_id=telegram_id, first_name=first_name, username=username, email=email, is_admin=True)
+        user = User(telegram_id=telegram_id,
+                    first_name=first_name,
+                    username=username,
+                    email=email,
+                    is_admin=True)
         await user.create()
-        ADMINS_ID.append(telegram_id)
     except UniqueViolationError:
         pass
 
