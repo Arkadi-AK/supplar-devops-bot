@@ -1,30 +1,18 @@
-import logging
-import os
+from aiogram import executor
 
-from dotenv import load_dotenv
-from aiogram import Bot, Dispatcher, executor, types
+from loader import dp
+from src import middlewares, filters, handlers
+from utils.db_api import db_gino
+from utils.set_bot_commands import set_default_commands
 
-# Using dotenv for load environ-variables
-load_dotenv()
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-
-# Initialize bot and dispatcher
-BOT_TOKEN = os.environ.get('BOT_TOKEN')
-bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+__all__ = ["middlewares", "filters", "handlers"]
 
 
-@dp.message_handler(commands=['start', 'help'])
-async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    code = "`from aiogram import Bot`"
-    print(message)
-    await message.reply(code, parse_mode="Markdown")
+async def on_startup(dispatcher):
+    await set_default_commands(dispatcher)
+    # Connecting to the database
+    await db_gino.on_startup(dp)
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, on_startup=on_startup)

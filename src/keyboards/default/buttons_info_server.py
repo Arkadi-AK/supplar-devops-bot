@@ -8,7 +8,7 @@ keyboards_info_server = ReplyKeyboardMarkup(
             KeyboardButton(text="Backup last day"),
         ],
         [
-            KeyboardButton(text="More")
+            KeyboardButton(text="Back")
         ],
     ],
     resize_keyboard=True
